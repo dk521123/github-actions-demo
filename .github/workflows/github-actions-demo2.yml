@@ -44,6 +44,10 @@ jobs:
         run: python -V
       - name: Run Python
         run: python ./DemoLib/setup.py bdist_egg
+      - name: Configure Git
+        run: |
+          git config --global user.email "dk521123@yahoo.com"
+          git config --global user.name "dk521123"
       - name: Commit and push wheel
         run: |
           git add -f ./DemoLib/dist/*.whl
