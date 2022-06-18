@@ -47,7 +47,7 @@ jobs:
           python -m pip install --user --upgrade build
           python -m build
           #pip install .
-          find ./dist/*.whl | xargs pip install
+          find ./DemoLib/dist/*.whl | xargs pip install
       - name: Run Python
         run: python ./DemoLib/setup.py bdist_egg
       - name: Configure Git
