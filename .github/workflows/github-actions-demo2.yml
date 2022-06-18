@@ -48,7 +48,7 @@ jobs:
           pip install PasteScript
       - name: Run Python
         run: |
-          python ./DemoLib/setup.py bdist_egg
+          python ./DemoLib/setup.py bdist_wheel
           cp ./dist/*.whl ./DemoLib/dist/*.whl
       - name: Configure Git
         run: |
