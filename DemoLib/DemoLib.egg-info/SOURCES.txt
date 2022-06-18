@@ -1,0 +1,10 @@
+setup.cfg
+setup.py
+DemoLib.egg-info/PKG-INFO
+DemoLib.egg-info/SOURCES.txt
+DemoLib.egg-info/dependency_links.txt
+DemoLib.egg-info/entry_points.txt
+DemoLib.egg-info/not-zip-safe
+DemoLib.egg-info/top_level.txt
+demolib/__init__.py
+demolib/demo_lib.py
