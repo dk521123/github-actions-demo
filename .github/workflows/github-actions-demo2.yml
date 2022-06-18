@@ -43,4 +43,4 @@ jobs:
       - name: Get Python version
         run: python -V
       - name: Run Python
-        run: python .//setup.py bdist_egg
+        run: python ./DemoLib/setup.py bdist_egg
