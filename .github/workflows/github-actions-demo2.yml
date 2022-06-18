@@ -47,7 +47,9 @@ jobs:
           python -m pip install --upgrade pip --user
           pip install PasteScript
       - name: Run Python
-        run: python ./DemoLib/setup.py bdist_egg
+        run: |
+          python ./DemoLib/setup.py bdist_egg
+          cp ./dist/*.whl ./DemoLib/dist/*.whl
       - name: Configure Git
         run: |
           git config --global user.email "dk521123@yahoo.com"
