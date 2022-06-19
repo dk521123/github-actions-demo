@@ -52,7 +52,7 @@ jobs:
           python ./DemoLib/setup.py bdist_wheel
           cp ./dist/*.whl ./DemoLib/dist/*.whl
       - name: File size check
-        if: ${{ `wc -c sample.py | awk '{print $1}'` <= 3 * 1024 }}
+        if: ${{ `ls -l ./dist/*.whl | awk '{ print $5; }'` <= 3 * 1024 }}
         run: exit 1
       - name: Configure Git
         run: |
