@@ -51,7 +51,7 @@ jobs:
         run: |
           python ./DemoLib/setup.py bdist_wheel
           cp ./dist/*.whl ./DemoLib/dist/*.whl
-          echo "wc -c ./dist/*.whl | awk '{print $1}'" >> $WHL_FILE_SIZE
+          echo "WHL_FILE_SIZE=`wc -c ./dist/*.whl | awk '{print $1}'`" >> $GITHUB_ENV >>
       - name: File size check
         if: ${{ $WHL_FILE_SIZE <= 3 * 1024 }}
         run: exit 1
