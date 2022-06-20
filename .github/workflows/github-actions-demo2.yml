@@ -53,7 +53,7 @@ jobs:
           cp ./dist/*.whl ./DemoLib/dist/*.whl
           echo "WHL_FILE_SIZE=$(wc -c ./dist/*.whl | awk '{print $1}')" >> $GITHUB_ENV
       - name: File size check
-        if: ${{ env.WHL_FILE_SIZE <= 1 * 1024 }}
+        if: ${{ env.WHL_FILE_SIZE <= 2000 }}
         run: exit 1
       - name: Configure Git
         run: |
