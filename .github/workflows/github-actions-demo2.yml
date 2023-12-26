@@ -22,18 +22,22 @@ on:
 
 env:
   DEMO_S3_PATH: s3://your-s3-bucket/xxxx
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world! - ${{ env.DEMO_S3_PATH }}
+      - name: If main
+        if: ${{ github.ref_name == 'main' }}
+        run: |
+          echo "MESSAGE=Hello" >> $GITHUB_ENV
+          echo "BRANCH_NAME=main" >> $GITHUB_ENV
+      - name: If other
+        if: ${{ github.ref_name != 'main' }}
+        run: |
+          echo "MESSAGE=World" >> $GITHUB_ENV
+          echo "BRANCH_NAME=${{github.ref_name}}" >> $GITHUB_ENV
+      - name: Result
+        run: echo "MESSAGE=${{ env.MESSAGE }}, BRANCH_NAME=${{ env.BRANCH_NAME }}"
