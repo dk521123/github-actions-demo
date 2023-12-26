@@ -19,6 +19,9 @@ on:
         options:
         - Hello
         - World
+
+env:
+  DEMO_S3_PATH: s3://your-s3-bucket/xxxx
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -33,40 +36,4 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: echo Hello, world! - ${{ inputs.chosen-hello-world }}
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
-
-      - name: Setup Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.7'
-          architecture: 'x64'
-      - name: Get Python version
-        run: python -V
-      - name: Build wheel and install
-        run: |
-          python -m pip install --upgrade pip --user
-          pip install wheel
-          pip install PasteScript
-      - name: Run Python
-        run: |
-          python ./DemoLib/setup.py bdist_wheel
-          cp ./dist/*.whl ./DemoLib/dist/*.whl
-          echo "WHL_FILE_SIZE=$(wc -c ./dist/*.whl | awk '{print $1}')" >> $GITHUB_ENV
-      - name: File size check
-        if: ${{ env.WHL_FILE_SIZE <= 2000 }}
-        run: exit 1
-      - name: Configure Git
-        run: |
-          git config --global user.email "dk521123@yahoo.com"
-          git config --global user.name "dk521123"
-      - name: Commit and push wheel
-        run: |
-          git add -f ./DemoLib/dist/*.whl
-          git commit -m 'pushing new wheel'
-          git push
+        run: echo Hello, world! - ${{ env.DEMO_S3_PATH }}
