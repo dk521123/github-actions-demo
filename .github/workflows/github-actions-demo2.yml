@@ -37,7 +37,7 @@ jobs:
         run: python -V
       - name: python demo
         run: |
-          result=$(python hello.py Mike 012345)
+          result=$(python .github/workflows/hello.py Mike 012345)
           echo $result
       - name: If main
         if: ${{ github.ref_name == 'main' }}
