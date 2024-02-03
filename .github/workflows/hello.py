@@ -9,4 +9,4 @@ if __name__ == "__main__":
     result = main(args)
 
     # return value
-　　sys.exit(result)
+　　sys.stdout.write("This is a just test")
