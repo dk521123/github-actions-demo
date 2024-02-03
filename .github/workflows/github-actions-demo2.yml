@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Sample
 
 # Controls when the workflow will run
 on:
@@ -23,12 +23,22 @@ on:
 env:
   DEMO_S3_PATH: s3://your-s3-bucket/xxxx
 jobs:
-  build:
+  sample:
     runs-on: ubuntu-latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
-
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.8'
+          architecture: 'x64'
+      - name: Get Python version
+        run: python -V
+      - name: python demo
+        run: |
+          result=$(python hello.py Mike 012345)
+          echo $result
       - name: If main
         if: ${{ github.ref_name == 'main' }}
         run: |
