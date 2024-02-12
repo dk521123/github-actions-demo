@@ -1,16 +1,10 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Sample
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "develop" branch
   push:
     branches: [ "develop" ]
   pull_request:
     branches: [ "develop" ]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     inputs:
       chosen-hello-world:
@@ -20,34 +14,25 @@ on:
         - Hello
         - World
 
-env:
-  DEMO_S3_PATH: s3://your-s3-bucket/xxxx
 jobs:
-  sample:
+  job1:
     runs-on: ubuntu-latest
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - run: mkdir -p path/to/artifact
+      - run: echo "hello World" > path/to/artifact/hello.txt
+      - uses: actions/upload-artifact@v4
         with:
-          python-version: '3.8'
-          architecture: 'x64'
-      - name: Get Python version
-        run: python -V
-      - name: python demo
-        run: |
-          result=$(python .github/workflows/hello.py Mike 012345)
-          echo $result
-      - name: If main
-        if: ${{ github.ref_name == 'main' }}
-        run: |
-          echo "MESSAGE=Hello" >> $GITHUB_ENV
-          echo "BRANCH_NAME=main" >> $GITHUB_ENV
-      - name: If other
-        if: ${{ github.ref_name != 'main' }}
-        run: |
-          echo "MESSAGE=World" >> $GITHUB_ENV
-          echo "BRANCH_NAME=${{github.ref_name}}" >> $GITHUB_ENV
-      - name: Result
-        run: echo "MESSAGE=${{ env.MESSAGE }}, BRANCH_NAME=${{ env.BRANCH_NAME }}"
+          name: hello-artifact
+          path: path/to/artifact/hello.txt
+          if-no-files-found: warn
+          retention-days: 1
+          overwrite: true
+  job2:
+    runs-on: ubuntu-latest
+    steps: 
+      - run: mkdir -p path/out/artifact
+      - uses: actions/download-artifact@v4
+        with:
+          name: hello-artifact
+          path: path/out/artifact
+      - run: cat path/out/artifact/hello.txt
