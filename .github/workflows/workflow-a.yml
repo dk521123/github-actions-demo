@@ -24,11 +24,8 @@ jobs:
       ENV: ${{ inputs.env }}
       DEMO_INPUT_VALUE: ${{ inputs.demoInputValue }}
     steps:
-      - uses: .github/workflows/deploy_to_ecs.yml
+      - uses: .github/workflows/workflow-b.yml
         with:
           env-value: ${{ env.ENV }}
           input-value: ${{ env.DEMO_INPUT_VALUE }}
           constant-value: "Hello World!!"
-
-      
-      service-name: sample-test-service
