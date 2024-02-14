@@ -24,8 +24,6 @@ jobs:
       ENV: ${{ inputs.env }}
       DEMO_INPUT_VALUE: ${{ inputs.demoInputValue }}
     steps:
-      - name: checkout local action
-        uses: actions/checkout@v3
       - uses: ./.github/workflows/workflow-b.yml
         with:
           env-value: ${{ env.ENV }}
