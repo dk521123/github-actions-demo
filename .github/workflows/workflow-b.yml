@@ -1,1 +1,42 @@
 
+name: Demo Workflow-B
+
+on:
+  workflow_call:
+    inputs:
+      env-value:
+        description: 'Input - Enviroment'
+        default: 'dev'
+        required: false
+        type: string
+      input-value:
+        description: 'Input - input-value'
+        required: false
+        type: string
+      constant-value:
+        description: 'Input - constant-value'
+        required: false
+        type: string
+    outputs:
+      workflow_output1:
+        description: "The first job output"
+        value: ${{ jobs.job-b.outputs.job_output1 }}
+jobs:
+  job-b:
+    runs-on: ubuntu-latest
+    env:
+      ENV: ${{ inputs.env-value }}
+      INPUT: ${{ inputs.input-value }}
+      CONSTANT: ${{ inputs.constant-value }}
+    steps:
+      - run: echo 'ENV = ${{ env.ENV }}'
+      - run: echo 'INPUT = ${{ env.INPUT }}'
+      - id: step1
+        run: echo "ENV=${{ env.ENV }}"
+      - id: step2
+        run: echo "INPUT=${{ env.INPUT }}" >> $GITHUB_OUTPUT
+      - id: step3
+        run: echo "constant=${{ env.CONSTANT }}" >> $GITHUB_OUTPUT
+    outputs:
+      workflow_output1: ${{ steps.job-b.outputs.constant }}
+  
