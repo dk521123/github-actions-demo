@@ -1,0 +1,14 @@
+name: Demo Workflow2
+
+on:
+  workflow_run:
+    workflows: [Demo Workflow1]
+    types:
+      - completed
+
+jobs:
+  job-2:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Done!!"
