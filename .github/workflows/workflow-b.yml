@@ -1,25 +1,24 @@
-name: Demo Workflow-B
+name: Reusable workflow sample
 
 on:
   workflow_call:
     inputs:
-      constant_value:
-        description: 'Input - constant-value'
-        required: false
+      friend_name:
+        description: Fill in the friend name you want to greet
+        required: true
         type: string
     outputs:
-      workflow_output1:
-        description: "The first job output"
-        value: ${{ jobs.job-b.outputs.job_output1 }}
+      greeting_message:
+        description: Greeting message
+        value: ${{ jobs.greeting.outputs.message }}
 
 jobs:
-  job-b:
+  greeting:
     runs-on: ubuntu-latest
-    env:
-      CONSTANT: ${{ inputs.constant-value }}
-    steps:
-      - id: step1
-        run: echo "constant=${{ env.CONSTANT }}" >> $GITHUB_OUTPUT
     outputs:
-      job_output1: ${{ steps.step1.outputs.constant }}
-  
+      message: ${{ steps.message.outputs.message }}
+    steps:
+      - id: message
+        run: |
+          echo 'message=Hi, ${{ inputs.friend_name }}!' >> $GITHUB_OUTPUT
+    
