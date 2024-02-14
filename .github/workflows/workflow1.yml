@@ -1,0 +1,28 @@
+name: Demo Workflow1
+
+on:
+  workflow_dispatch:
+    inputs:
+      env:
+        description: 'Enviroment'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+        - dev
+        - stage
+        - prod
+      demoInputValue:
+        description: 'Sample input'
+        required: true
+        type: string
+jobs:
+  log-the-inputs:
+    runs-on: ubuntu-latest
+    env:
+      ENV: ${{ inputs.env }}
+      DEMO_INPUT_VALUE: ${{ inputs.demoInputValue }}
+    steps:
+      - run: |
+          echo "ENV: $ENV"
+          echo "DEMO_INPUT_VALUE: $DEMO_INPUT_VALUE"
