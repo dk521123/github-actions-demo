@@ -16,6 +16,10 @@ on:
         description: 'Input - constant-value'
         required: false
         type: string
+    secrets:
+      SECRET:
+        description: Fill some secret string
+        required: true
     outputs:
       workflow_output1:
         description: "The first job output"
