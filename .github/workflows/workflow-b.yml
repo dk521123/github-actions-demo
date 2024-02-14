@@ -1,24 +1,24 @@
-name: Reusable workflow sample
+name: Sample workflow for workflow_call
 
 on:
   workflow_call:
     inputs:
-      friend_name:
-        description: Fill in the friend name you want to greet
+      input_name:
+        description: Fill name
         required: true
         type: string
     outputs:
-      greeting_message:
-        description: Greeting message
-        value: ${{ jobs.greeting.outputs.message }}
+      result_message:
+        description: Result output message
+        value: ${{ jobs.greeting.outputs.output_result }}
 
 jobs:
   greeting:
     runs-on: ubuntu-latest
     outputs:
-      message: ${{ steps.message.outputs.message }}
+      output_result: ${{ steps.message.outputs.result }}
     steps:
       - id: message
         run: |
-          echo 'message=Hi, ${{ inputs.friend_name }}!' >> $GITHUB_OUTPUT
+          echo 'result=Hi, ${{ inputs.input_name }}!' >> $GITHUB_OUTPUT
     
