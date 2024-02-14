@@ -2,34 +2,12 @@ name: Demo Workflow-A
 
 on:
   workflow_dispatch:
-    inputs:
-      env:
-        description: 'Enviroment'
-        required: true
-        default: 'dev'
-        type: choice
-        options:
-        - dev
-        - stage
-        - prod
-      demoInputValue:
-        description: 'Sample input'
-        required: true
-        type: string
 
 jobs:
   job-a:
     runs-on: ubuntu-latest
-    env:
-      ENV: ${{ inputs.env }}
-      DEMO_INPUT_VALUE: ${{ inputs.demoInputValue }}
     steps:
       - name: Calling
         uses: ./.github/workflows/workflow-b.yml
         with:
-          env-value: ${{ env.ENV }}
-          input-value: ${{ env.DEMO_INPUT_VALUE }}
-          constant-value: "Hello World!!"
-        secrets:
-          SECRET: ${{ secrets.SECRET }}
-
+          constant_value: "Hello World!!"
