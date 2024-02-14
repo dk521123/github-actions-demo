@@ -20,6 +20,7 @@ on:
       workflow_output1:
         description: "The first job output"
         value: ${{ jobs.job-b.outputs.job_output1 }}
+
 jobs:
   job-b:
     runs-on: ubuntu-latest
@@ -35,5 +36,5 @@ jobs:
       - id: step3
         run: echo "constant=${{ env.CONSTANT }}" >> $GITHUB_OUTPUT
     outputs:
-      job_output1: ${{ steps.job-b.outputs.constant }}
+      job_output1: ${{ steps.step3.outputs.constant }}
   
