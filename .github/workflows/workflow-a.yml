@@ -1,17 +1,17 @@
-name: Starter workflow for reusable workflow
+name: Start workflow
 
 on:
   workflow_dispatch:
 
 jobs:
-  call_reusable_workflow:
+  call_demo_workflow:
     uses: ./.github/workflows/workflow-b.yml
     with:
       friend_name: Mike
 
   show_outputs:
     needs:
-      - call_reusable_workflow
+      - call_demo_workflow
     runs-on: ubuntu-latest
     steps:
       - run: |
