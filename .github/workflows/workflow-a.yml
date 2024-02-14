@@ -7,7 +7,7 @@ jobs:
   call_demo_workflow:
     uses: ./.github/workflows/workflow-b.yml
     with:
-      friend_name: Mike
+      input_name: Mike
 
   show_outputs:
     needs:
