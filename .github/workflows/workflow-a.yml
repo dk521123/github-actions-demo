@@ -25,8 +25,11 @@ jobs:
       DEMO_INPUT_VALUE: ${{ inputs.demoInputValue }}
     steps:
       - name: Calling
-        uses: ./.github/workflows/workflow-b.yml@main
+        uses: ./.github/workflows/workflow-b.yml
         with:
           env-value: ${{ env.ENV }}
           input-value: ${{ env.DEMO_INPUT_VALUE }}
           constant-value: "Hello World!!"
+        secrets:
+          SECRET: ${{ secrets.SECRET }}
+
