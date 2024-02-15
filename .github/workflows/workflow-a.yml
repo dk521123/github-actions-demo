@@ -3,11 +3,24 @@ name: Start workflow
 on:
   workflow_dispatch:
 
+env:
+  INPUT_NAME: Smith
+
 jobs:
+  init:
+    outputs:
+      input_value: ${{ steps.init_values.outputs.input_value }}
+    runs-on: ubuntu-latest
+    steps:
+      - id: init_values
+        run: |
+          echo 'input_value=${{ env.INPUT_NAME }}!' >> $GITHUB_OUTPUT
   call_demo_workflow:
+    needs:
+      - init
     uses: ./.github/workflows/workflow-b.yml
     with:
-      input_name: Mike
+      input_name: ${{ needs.init.outputs.input_value }}
 
   show_outputs:
     needs:
