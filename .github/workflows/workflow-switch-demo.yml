@@ -29,7 +29,7 @@ jobs:
           echo "ENV=${{ env.ENV }} S3_NAME=${{ env.S3_NAME }}"
       - id: set-params-for-dev
         name: Set parameters for Dev
-        if: ${{ !startsWith(github.ref, 'releases/') and github.ref != 'master' }}
+        if: ${{ !startsWith(github.ref, 'releases/') && github.ref != 'master' }}
         env:
           DEV_ENV_NAME: dev
           DEV_S3_NAME: your-s3-dev-name
