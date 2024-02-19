@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      # For Prod
       - id: set-params-for-prod
         name: Set parameters for Production
         if: ${{ github.ref == 'master' }}
@@ -20,7 +21,7 @@ jobs:
         run: |
           echo "ENV=${{ env.PROD_ENV_NAME }}" >> $GITHUB_ENV
           echo "S3_NAME=${{ env.PROD_S3_NAME }}" >> $GITHUB_ENV
-          echo "ENV=${{ env.ENV }} S3_NAME=${{ env.S3_NAME }}"
+      # For Stage
       - id: set-params-for-stage
         name: Set parameters for Staging
         if: ${{ startsWith(github.ref, 'releases/') }}
@@ -30,7 +31,7 @@ jobs:
         run: |
           echo "ENV=${{ env.STAGE_ENV_NAME }}" >> $GITHUB_ENV
           echo "S3_NAME=${{ env.STAGE_S3_NAME }}" >> $GITHUB_ENV
-          echo "ENV=${{ env.ENV }} S3_NAME=${{ env.S3_NAME }}"
+      # For Dev
       - id: set-params-for-dev
         name: Set parameters for Dev
         if: ${{ !startsWith(github.ref, 'releases/') && github.ref != 'master' }}
@@ -40,7 +41,7 @@ jobs:
         run: |
           echo "ENV=${{ env.DEV_ENV_NAME }}" >> $GITHUB_ENV
           echo "S3_NAME=${{ env.DEV_S3_NAME }}" >> $GITHUB_ENV
-          echo "ENV=${{ env.ENV }} S3_NAME=${{ env.S3_NAME }}"
+      # To show results
       - id: show-params
         name: Show parameters
         run: |
