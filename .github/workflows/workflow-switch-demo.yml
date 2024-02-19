@@ -7,6 +7,7 @@ jobs:
   sample-job1:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - id: set-params-for-prod
         name: Set parameters for Production
         if: ${{ github.ref == 'master' }}
