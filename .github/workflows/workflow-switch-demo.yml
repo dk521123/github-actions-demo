@@ -1,0 +1,39 @@
+on:
+  push:
+    branches:
+      - develop
+      - 'releases/**'
+jobs:
+  sample-job:
+    runs-on: ubuntu-latest
+    steps:
+      - id: set-params-for-prod
+        name: Set parameters for Production
+        if: ${{ github.ref == 'master' }}
+        env:
+          PROD_ENV_NAME: prod
+          PROD_S3_NAME: your-s3-prod-name
+        run: |
+          echo "ENV=${{ env.PROD_ENV_NAME }}" >> $GITHUB_ENV
+          echo "S3_NAME=${{ env.PROD_S3_NAME }}" >> $GITHUB_ENV
+          echo "ENV=${{ env.ENV }} S3_NAME=${{ env.S3_NAME }}"
+      - id: set-params-for-stage
+        name: Set parameters for Staging
+        if: ${{ startsWith(github.ref, 'releases/') }}
+        env:
+          STAGE_ENV_NAME: stage
+          STAGE_S3_NAME: your-s3-stage-name
+        run: |
+          echo "ENV=${{ env.STAGE_ENV_NAME }}" >> $GITHUB_ENV
+          echo "S3_NAME=${{ env.STAGE_S3_NAME }}" >> $GITHUB_ENV
+          echo "ENV=${{ env.ENV }} S3_NAME=${{ env.S3_NAME }}"
+      - id: set-params-for-dev
+        name: Set parameters for Dev
+        if: ${{ !startsWith(github.ref, 'releases/') and github.ref != 'master' }}
+        env:
+          DEV_ENV_NAME: dev
+          DEV_S3_NAME: your-s3-dev-name
+        run: |
+          echo "ENV=${{ env.DEV_ENV_NAME }}" >> $GITHUB_ENV
+          echo "S3_NAME=${{ env.DEV_S3_NAME }}" >> $GITHUB_ENV
+          echo "ENV=${{ env.ENV }} S3_NAME=${{ env.S3_NAME }}"
