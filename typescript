@@ -1,0 +1,28 @@
+Script started on 2024-03-04 08:39:28+00:00 [<not executed on terminal>]
+==== finding fixable violations ====
+matching:   0% 0/3 [00:00<?, ?it/s]                                   parsing:   0% 0/5 [00:00<?, ?it/s]                                  lint by rules:   0% 0/14 [00:00<?, ?it/s]rule L001:   0% 0/14 [00:00<?, ?it/s]    rule L002:   0% 0/14 [00:00<?, ?it/s]rule L003:   0% 0/14 [00:00<?, ?it/s]
+matching: 0it [00:00, ?it/s][A
+                            [A
+matching: 0it [00:00, ?it/s][A
+                            [A
+matching:   0% 0/1 [00:00<?, ?it/s][A
+                                   [A
+parsing:   0% 0/5 [00:00<?, ?it/s][A
+                                  [Arule L004:   0% 0/14 [00:00<?, ?it/s]rule L005:   0% 0/14 [00:00<?, ?it/s]rule L006:   0% 0/14 [00:00<?, ?it/s]rule L010:   0% 0/14 [00:00<?, ?it/s]rule L011:   0% 0/14 [00:00<?, ?it/s]rule L012:   0% 0/14 [00:00<?, ?it/s]rule L017:   0% 0/14 [00:00<?, ?it/s]rule L018:   0% 0/14 [00:00<?, ?it/s]rule L019:   0% 0/14 [00:00<?, ?it/s]rule L022:   0% 0/14 [00:00<?, ?it/s]rule L023:   0% 0/14 [00:00<?, ?it/s]                                     lint by rules:   0% 0/14 [00:00<?, ?it/s]rule L001:   0% 0/14 [00:00<?, ?it/s]    rule L002:   0% 0/14 [00:00<?, ?it/s]rule L003:   0% 0/14 [00:00<?, ?it/s]
+matching:   0% 0/1 [00:00<?, ?it/s][A
+                                   [A
+parsing:   0% 0/4 [00:00<?, ?it/s][A
+                                  [Arule L004:   0% 0/14 [00:00<?, ?it/s]rule L005:   0% 0/14 [00:00<?, ?it/s]rule L006:   0% 0/14 [00:00<?, ?it/s]rule L010:   0% 0/14 [00:00<?, ?it/s]rule L011:   0% 0/14 [00:00<?, ?it/s]rule L017:   0% 0/14 [00:00<?, ?it/s]rule L018:   0% 0/14 [00:00<?, ?it/s]rule L019:   0% 0/14 [00:00<?, ?it/s]rule L022:   0% 0/14 [00:00<?, ?it/s]rule L023:   0% 0/14 [00:00<?, ?it/s]                                     lint by rules:   0% 0/14 [00:00<?, ?it/s]rule L001:   0% 0/14 [00:00<?, ?it/s]    rule L002:   0% 0/14 [00:00<?, ?it/s]rule L003:   0% 0/14 [00:00<?, ?it/s]rule L004:   0% 0/14 [00:00<?, ?it/s]rule L005:   0% 0/14 [00:00<?, ?it/s]rule L006:   0% 0/14 [00:00<?, ?it/s]rule L010:   0% 0/14 [00:00<?, ?it/s]rule L011:   0% 0/14 [00:00<?, ?it/s]rule L017:   0% 0/14 [00:00<?, ?it/s]rule L018:   0% 0/14 [00:00<?, ?it/s]rule L019:   0% 0/14 [00:00<?, ?it/s]rule L022:   0% 0/14 [00:00<?, ?it/s]rule L023:   0% 0/14 [00:00<?, ?it/s]                                     lint by rules:   0% 0/1 [00:00<?, ?it/s]rule L010:   0% 0/1 [00:00<?, ?it/s]                                        == [[30m[1msqls/test.sql[0m] [31mFAIL[0m
+[34mL:   1 | P:   5 | L003 | [0mFirst line has unexpected indent
+[34mL:   2 | P:   1 | L003 | [0mExpected 1 indentations, found 0 [compared to line 01]
+[34mL:   3 | P:   2 | L003 | [0mExpected 1 indentations, found 0 [compared to line 01]
+[34mL:   3 | P:  15 | L010 | [0mKeywords must be consistently upper case.
+[34mL:   4 | P:   1 | L003 | [0mExpected 1 indentations, found 0 [compared to line 01]
+==== fixing violations ====
+5 fixable linting violations found
+[31mFORCE MODE[0m: Attempting fixes...
+Persisting Changes...
+== [[30m[1msqls/test.sql[0m] [32mPASS[0m
+Done. Please check your files to confirm.
+[0m
+Script done on 2024-03-04 08:39:29+00:00 [COMMAND_EXIT_CODE="0"]

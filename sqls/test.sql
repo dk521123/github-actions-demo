@@ -1,4 +1,4 @@
-    SELECT
-* FROM
- sample_table as t1
+SELECT
+    * FROM
+    sample_table AS t1
 ;
