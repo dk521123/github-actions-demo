@@ -1,18 +1,7 @@
-name DemoWorkflowLinter
+name: DemoWorkflowLinter
 
 on:
-  # Allows you to run this workflow manually from the Actions tab
-#  push:
-#    branches:
-#      - your-branch
   workflow_dispatch:
-    inputs:
-      chosen-hello-world:
-        required: true
-        type: choice
-        options:
-        - Hello
-        - World
 
 jobs:
   sample-job:
