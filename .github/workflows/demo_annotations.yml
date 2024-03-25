@@ -10,9 +10,17 @@ jobs:
       - uses: actions/checkout@v4      
       - name: Enable Matchers
         run: echo "::add-matcher::.github/demo_matcher.json"
-      - name: Demo for Matchers
+      - name: Demo for Matchers 1
         run: |
            echo 'badFile.js: line 50, col 11, Error - 'myVar' is defined but never used. (no-unused-vars)'
+        continue-on-error: true
+      - name: Demo for Matchers 2
+        run: |
+           echo 'badFile.js: line 50, col 11, Warning - 'myVar' is defined but never used. (no-unused-vars)'
+        continue-on-error: true
+      - name: Demo for Matchers 3
+        run: |
+           echo 'badFile.js: line 50, col 11, Info - 'myVar' is defined but never used. (no-unused-vars)'
         continue-on-error: true
       - name: Disable Matchers
         run: echo "::remove-matcher owner=hello_demo::"
