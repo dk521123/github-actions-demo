@@ -24,3 +24,10 @@ jobs:
         continue-on-error: true
       - name: Disable Matchers
         run: echo "::remove-matcher owner=hello_demo::"
+      - name: Demo for GITHUB_STEP_SUMMARY
+        run: |
+          echo "|Properties|Value|" >> $GITHUB_STEP_SUMMARY
+          echo "|---|---|" >> $GITHUB_STEP_SUMMARY
+          echo "|GitHub Ref|\`${{ github.ref }}\`|" >> $GITHUB_STEP_SUMMARY
+          echo "|Commit Hash|\`${{ github.sha }}\`|" >> $GITHUB_STEP_SUMMARY
+
