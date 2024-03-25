@@ -1,0 +1,16 @@
+name: DemoAnnotations
+
+on:
+  workflow_dispatch:
+
+jobs:
+  sample-job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Demo
+        run: |
+           echo '::error file=README.md,line=1,col=3::line and column'
+           echo '::warning file=README.md::file name only'
+           echo '::notice::111'
+        continue-on-error: true
