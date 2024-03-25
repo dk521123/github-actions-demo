@@ -14,3 +14,8 @@ jobs:
            echo '::warning file=README.md::file name only'
            echo '::notice::111'
         continue-on-error: true
+      - name: Demo for Matchers
+        run: |
+           echo 'main.py:2:3: E111 indentation is not a multiple of four'
+           echo 'demo.py:8:20: W292 no newline at end of file'
+        continue-on-error: true
