@@ -8,19 +8,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Demo
+      - name: Enable problem matcher
         run: |
-           echo '::error file=README.md,line=1,col=3::line and column'
-           echo '::warning file=README.md::file name only'
-           echo '::notice file=app.js,line=1,col=5,endColumn=7::Missing semicolon'
-           echo '::debug::Set the Octocat variable'
+           echo "::add-matcher::.github/demo_matcher.json"
         continue-on-error: true
       - name: Demo for Matchers
         run: |
            echo 'main.py:2:3: E111 indentation is not a multiple of four'
-           exit 1
+           echo 'main.py:2:3: E111 indentation is not a multiple of four'
         continue-on-error: true
-      - name: Demo for Matchers 2
+      - name: Disable problem matcher
         run: |
-           echo "::add-matcher::.github/demo_matcher.json"
-        continue-on-error: true
+          echo "::remove-matcher owner=user::"
