@@ -14,9 +14,9 @@ jobs:
         continue-on-error: true
       - name: Demo for Matchers
         run: |
-           echo 'main.py:2:3: E111 indentation is not a multiple of four'
-           echo 'main.py:2:3: E111 indentation is not a multiple of four'
+           echo 'badFile.js: line 50, col 11, Error - 'myVar' is defined but never used. (no-unused-vars)'
         continue-on-error: true
       - name: Disable problem matcher
         run: |
           echo "::remove-matcher owner=user::"
+        continue-on-error: true
