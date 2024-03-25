@@ -7,11 +7,12 @@ jobs:
   sample-job:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4      
+      - name: Enable Matchers
+        run: echo "::add-matcher::.github/demo_matcher.json"
       - name: Demo for Matchers
         run: |
-           echo "::add-matcher::.github/demo_matcher.json"
            echo 'badFile.js: line 50, col 11, Error - 'myVar' is defined but never used. (no-unused-vars)'
-           echo "::remove-matcher owner=user::"
         continue-on-error: true
-
+      - name: Disable Matchers
+        run: echo "::remove-matcher owner=hello_demo::"
