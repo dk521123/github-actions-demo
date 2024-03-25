@@ -12,7 +12,8 @@ jobs:
         run: |
            echo '::error file=README.md,line=1,col=3::line and column'
            echo '::warning file=README.md::file name only'
-           echo '::notice::111'
+           echo '::notice file=app.js,line=1,col=5,endColumn=7::Missing semicolon'
+           echo '::debug::Set the Octocat variable'
         continue-on-error: true
       - name: Demo for Matchers
         run: |
