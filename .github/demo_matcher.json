@@ -2,7 +2,6 @@
   "demo_matcher": [
     {
       "owner": "user",
-      "severity": "error",
       "pattern": [
         {
           "regexp": "^(.+):\\sline\\s(\\d+),\\scol\\s(\\d+),\\s(Error|Warning|Info)\\s-\\s(.+)\\s\\((.+)\\)$",
