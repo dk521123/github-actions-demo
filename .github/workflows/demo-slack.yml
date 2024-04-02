@@ -1,4 +1,5 @@
 name: RunDemoForSlack
+
 on:
   workflow_dispatch:
 jobs:
@@ -15,9 +16,9 @@ jobs:
         uses: slackapi/slack-github-action@v1.25.0
         with:
           payload: |
-          {
-            "key": "value",
-            "foo": "bar"
-          }
+           {
+             "key1": "Hello",
+             "key2": "World"
+           }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
