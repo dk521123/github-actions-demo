@@ -1,0 +1,23 @@
+name: RunDemoForSlack
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Check out theis repo
+      - uses: actions/checkout@v4
+
+      # Start a Slack workflow using a webhook trigger
+      # https://github.com/slackapi/slack-github-action
+      - name: Send to Slack
+        id: slack
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          payload: |
+          {
+            "key": "value",
+            "foo": "bar"
+          }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
