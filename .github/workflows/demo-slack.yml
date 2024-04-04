@@ -7,23 +7,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Check out theis repo
-      - uses: actions/checkout@v4
+      #- uses: actions/checkout@v4.1.2
+      - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633
 
       # Start a Slack workflow using a webhook trigger
       # https://github.com/slackapi/slack-github-action
       - name: Send to Slack
         id: slack
-        uses: slackapi/slack-github-action@v1.25.0
+        #uses: slackapi/slack-github-action@v1.25.0
+        uses: slackapi/slack-github-action@6c661ce58804a1a20f6dc5fbee7f0381b469e001
         with:
           payload: |
             {
-              "text": ":github: ビルド結果: ${{ job.status }}\n\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
+              "text": ":github: Result to build: ${{ job.status }}\n\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
               "blocks": [
                 {
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": ":github: ビルド結果: ${{ job.status }}\n\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+                    "text": ":github: Result to build: ${{ job.status }}\n\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
                   }
                 },
                 {
