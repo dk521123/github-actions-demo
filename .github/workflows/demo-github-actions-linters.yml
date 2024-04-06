@@ -3,12 +3,19 @@ name: RunGithubActionsLinters
 on:
   workflow_dispatch:
 jobs:
-  build:
+  lint-by-actionlint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633
+      # actionlint
       - uses: reviewdog/action-actionlint@c6ee1eb0a5d47b2af53a203652b5dac0b6c4016e # v1.40.0
         with:
           fail_on_error: true
           filter_mode: nofilter
           level: info
+      # ghalint
+      - name: Run sbt format
+        run: |
+          curl -OL https://github.com/suzuki-shunsuke/ghalint/releases/download/v0.2.9/ghalint_0.2.9_linux_amd64.tar.gz
+          tar -zxvf ghalint_0.2.9_linux_amd64.tar.gz
+          ./ghalint run
