@@ -1,0 +1,11 @@
+name: "permissions test"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    permissions: {}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
