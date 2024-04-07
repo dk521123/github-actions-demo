@@ -2,12 +2,11 @@ name: DemoPythonLinter
 
 on:
   workflow_dispatch:
-
+# !! Fixing for "job should have permissions"
+permissions: {}
 jobs:
   sample-job:
     runs-on: ubuntu-latest
-    # !! Fixing for "job should have permissions"
-    permissions: {}
     steps:
       # !! Fixing for "action ref should be full length SHA1"
       # v4.1.2
