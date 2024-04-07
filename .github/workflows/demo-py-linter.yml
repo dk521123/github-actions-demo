@@ -1,4 +1,4 @@
-name: DemoWorkflowLinter
+name: DemoPythonLinter
 
 on:
   workflow_dispatch:
