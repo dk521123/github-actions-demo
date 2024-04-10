@@ -2,8 +2,6 @@ name: DemoForPullRequest
 
 on:
   pull_request:
-    branches:
-      - 'releases/**'
     types:
       - opened
       - reopened
