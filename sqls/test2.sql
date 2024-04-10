@@ -1,5 +1,5 @@
--- This is a test SQL.
-SELECT
-    id,
-    name
-FROM sample_table2;
+select
+    column_1,
+    column_2,
+    column_3
+from sample_table;
