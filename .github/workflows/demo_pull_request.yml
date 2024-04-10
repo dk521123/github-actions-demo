@@ -11,7 +11,7 @@ on:
 env:
   base_branch: develop
 jobs:
-  init-job:
+  lint-job:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Python
@@ -34,5 +34,6 @@ jobs:
 
           for file in ${diff_files}
           do
+            echo "# target_file: ${file}"
             sqlfluff fix $file --show-lint-violations --dialect snowflake
           done
