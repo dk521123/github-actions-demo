@@ -1,9 +1,7 @@
-WITH const AS (
-    SELECT 365 * 2 AS interval_date
-)
-
 SELECT
-    *
+    a,
+    b,
+    e,
+    c + d
 FROM
-    project-name.`data-set-name`.schema-name,
-    const
+    hello;
