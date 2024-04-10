@@ -1,5 +1,6 @@
-select
+SELECT
     column_1,
     column_2,
     column_3
-from sample_table;
+FROM
+    sample_table;
