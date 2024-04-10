@@ -30,10 +30,12 @@ jobs:
         run: |
           diff_files=$(git diff --name-only HEAD ${base_branch} -- "sqls/**.sql" \
             | tr "\n" " ")
-          echo "# diff_files: ${diff_files}"
+          echo "- diff_files: ${diff_files}"
 
           for file in ${diff_files}
           do
-            echo "# target_file: ${file}"
-            sqlfluff fix $file --dialect snowflake -f
+            echo "- target_file: ${file}"
+            sqlfluff fix $file --dialect snowflake
+            error_code="$?"
+            echo "- error_code=${error_code}"
           done
