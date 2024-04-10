@@ -1,5 +1,7 @@
--- This is a test SQL.
 SELECT
-    * FROM
-    sample_table AS t1
-;
+    a,
+    b,
+    e,
+    c + d
+FROM
+    hello;
