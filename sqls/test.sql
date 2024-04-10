@@ -1,2 +1,9 @@
--- This is a test SQL.
-SELECT * FROM sample_table;
+WITH const AS (
+    SELECT 365 * 2 AS interval_date
+)
+
+SELECT
+    *
+FROM
+    project-name.`data-set-name`.schema-name,
+    const
