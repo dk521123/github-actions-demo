@@ -3,5 +3,4 @@ SELECT
   id,
   name
 FROM
-  sample_table
-;
+  sample_table2;
