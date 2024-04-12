@@ -24,9 +24,10 @@ jobs:
           lint_results="sqlfluff-lint.json"
           for file in 'sqls/*.sql' 
           do
-            sqlfluff lint $file --dialect snowflake --format json | tee "$lint_results"
             lint_results_rdjson="sqlfluff-lint.rdjson"
-            cat <"$lint_results" | jq -r -f "./to-rdjson.jq" | tee >"$lint_results_rdjson"
+            cat <"$lint_results" |
+              jq -r -f "${SCRIPT_DIR}/to-rdjson.jq" |
+              tee >"$lint_results_rdjson"
             cat <"$lint_results_rdjson" |
               reviewdog -f=rdjson \
                 -name="sqlfluff-lint" \
