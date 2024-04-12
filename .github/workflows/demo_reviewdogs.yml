@@ -23,7 +23,7 @@ jobs:
           REVIEWDOG_GITHUB_API_TOKEN: "${{ secrets.REVIEWDOG_GITHUB_API_TOKEN }}"
         run: |
           set +Eeuo pipefail
-          export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN:?}"
+
           for file in 'sqls/*.sql' 
           do
             lint_results="sqlfluff-lint.json"
