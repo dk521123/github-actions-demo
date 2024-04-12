@@ -31,7 +31,7 @@ jobs:
             
             lint_results_rdjson="sqlfluff-lint.rdjson"
             cat <"$lint_results" |
-              jq -r -f "${SCRIPT_DIR}/to-rdjson.jq" |
+              jq -r -f ".github/template.json" |
               tee >"$lint_results_rdjson"
             cat <"$lint_results_rdjson" |
               reviewdog -f=rdjson \
