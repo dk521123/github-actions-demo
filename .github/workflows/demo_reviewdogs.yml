@@ -4,7 +4,7 @@ on:
   - pull_request
 jobs:
   demo-job:
-    name: build
+    name: lint
     runs-on: ubuntu-latest
     steps:
       - name: Run checkout
@@ -27,7 +27,6 @@ jobs:
             sqlfluff lint $file --dialect snowflake --format json | tee "$lint_results"
             lint_results_rdjson="sqlfluff-lint.rdjson"
             cat <"$lint_results" | jq -r -f "./to-rdjson.jq" | tee >"$lint_results_rdjson"
-             | reviewdog -f=tsc -reporter=github-pr-review -fail-on-error=true
             cat <"$lint_results_rdjson" |
               reviewdog -f=rdjson \
                 -name="sqlfluff-lint" \
