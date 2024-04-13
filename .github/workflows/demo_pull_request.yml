@@ -1,7 +1,7 @@
 name: DemoForPullRequest
 
 on:
-  pull_request:
+  pull_request_target:
     types:
       - opened
       - reopened
@@ -35,7 +35,5 @@ jobs:
           for file in ${diff_files}
           do
             echo "- target_file: ${file}"
-            sqlfluff fix $file --dialect snowflake
-            error_code="$?"
-            echo "- error_code=${error_code}"
+            sqlfluff lint $file --dialect snowflake --format github-annotation-native
           done
