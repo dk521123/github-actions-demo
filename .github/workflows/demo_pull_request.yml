@@ -38,6 +38,7 @@ jobs:
             sqlfluff lint $file --dialect snowflake --format github-annotation-native
           done
       - name: Check PR title
+        if: ${{ !cancelled() }}
         run: |
           title="${{ github.event.pull_request.title }}" # 「a"; ls $GITHUB_WORKSPACE"」
           if [[ $title =~ ^octocat ]]; then
