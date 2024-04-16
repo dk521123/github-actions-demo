@@ -37,3 +37,13 @@ jobs:
             echo "- target_file: ${file}"
             sqlfluff lint $file --dialect snowflake --format github-annotation-native
           done
+      - name: Check PR title
+        run: |
+          title="${{ github.event.pull_request.title }}" # 「a"; ls $GITHUB_WORKSPACE"」
+          if [[ $title =~ ^octocat ]]; then
+            echo "PR title starts with 'octocat'"
+            exit 0
+          else
+            echo "PR title did not start with 'octocat'"
+            exit 1
+          fi
