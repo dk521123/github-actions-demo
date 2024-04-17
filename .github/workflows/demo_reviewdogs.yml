@@ -19,17 +19,22 @@ jobs:
           pip install ruff
           pip install pylint
           pylint --generate-rcfile > ~/.pylintrc
+          pip install sqlfluff
       # reviewdog
       - uses: reviewdog/action-setup@v1
         with:
           reviewdog_version: latest
+      # For pylint
       - name: Lint with pylint
         run: |
+          pylint --rcfile=~/.pylintrc *.py | echo
           pylint --rcfile=~/.pylintrc *.py | reviewdog -efm="%f:%l:%c: %m" -reporter=github-pr-review
         env:
           REVIEWDOG_GITHUB_API_TOKEN: "${{ secrets.REVIEWDOG_GITHUB_API_TOKEN }}"
-      - name: Lint with Ruff
+      # 
+      - name: format
         run: |
-          ruff check . | reviewdog -efm="%f:%l:%c: %m" -name=ruff -reporter=github-pr-review -fail-on-error=true -filter-mode=nofilter
-        env:
-          REVIEWDOG_GITHUB_API_TOKEN: "${{ secrets.REVIEWDOG_GITHUB_API_TOKEN }}"
+          for file in 'sqls/*.sql' 
+          do
+            sqlfluff lint $file --dialect snowflake --format github-annotation
+          done
