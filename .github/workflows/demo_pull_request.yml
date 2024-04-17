@@ -20,15 +20,20 @@ jobs:
             python-version: '3.10'
       - name: install SQLFluff
         run: 'pip install sqlfluff'
-      - name: Switch to pull request branch
+      # Get base branch
+      - name: Fetch Base Branch Latest Commit
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
-      - name: Fetch base branch
-        run: git fetch origin ${base_branch}:${base_branch}
+          ref: ${{ github.event.pull_request.base.ref }}
+          fetch-depth: 1
+      - name: Switch to pull request branch
+        uses: actions/checkout@v4
+      # Get  branch
+      - name: Switch to pull request branch
+        uses: actions/checkout@v4
       - name: Run actions using diff_files
         run: |
-          diff_files=$(git diff --name-only HEAD ${base_branch} -- "sqls/**.sql" \
+          diff_files=$(git diff --name-only origin/${{ github.event.pull_request.base.ref }}..${{ github.sha }}  -- "sqls/*.sql" \
             | tr "\n" " ")
           echo "- diff_files: ${diff_files}"
 
