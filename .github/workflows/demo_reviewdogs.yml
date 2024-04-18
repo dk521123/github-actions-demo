@@ -15,7 +15,7 @@ jobs:
           github_token: ${{ secrets.REVIEWDOG_GITHUB_API_TOKEN }}
           reporter: github-pr-review
           sqlfluff_command: "lint"
-          paths: '${{ github.workspace }}/sqls'
+          paths: 'sqls/'
           dialect: snowflake
       - name: 'Show outputs (Optional)'
         shell: bash
