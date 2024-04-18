@@ -3,12 +3,9 @@
     name: "sqlfluff",
     url: "https://github.com/sqlfluff/sqlfluff"
   },
+  severity: WARNING,
   diagnostics: (. // {}) | map(. as $file | $file.violations[] as $violation | {
     message: "$violation.name - $violation.description",
-    code: {
-      value: $violation.code,
-      url: "https://docs.sqlfluff.com/en/stable/rules.html#rule-\($violation.code)"
-    },
     location: {
       path: $file.filepath,
       range: {
@@ -16,12 +13,16 @@
           line: $violation.start_line_no,
           column: $violation.start_line_pos
         },
-        ende: {
+        end: {
           line: $violation.end_line_no,
           column: $violation.end_line_pos
         },
       }
     },
     severity: "WARNING",
+    code: {
+      value: $violation.code,
+      url: "https://docs.sqlfluff.com/en/stable/rules.html#rule-\($violation.code)"
+    },
   })
 }
