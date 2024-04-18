@@ -3,7 +3,7 @@
     name: "sqlfluff",
     url: "https://github.com/sqlfluff/sqlfluff"
   },
-  severity: WARNING,
+  severity: "WARNING",
   diagnostics: (. // {}) | map(. as $file | $file.violations[] as $violation | {
     message: "$violation.name - $violation.description",
     location: {
