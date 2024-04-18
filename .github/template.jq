@@ -4,7 +4,7 @@
     url: "https://github.com/sqlfluff/sqlfluff"
   },
   diagnostics: (. // {}) | map(. as $file | $file.violations[] as $violation | {
-    message: $violation.name - $violation.description,
+    message: "$violation.name - $violation.description",
     code: {
       value: $violation.code,
       url: "https://docs.sqlfluff.com/en/stable/rules.html#rule-\($violation.code)"
