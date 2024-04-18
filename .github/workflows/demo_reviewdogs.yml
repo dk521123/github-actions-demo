@@ -26,7 +26,7 @@ jobs:
       # Step2: Lint
       - name: lint with SQLFluff
         run: |
-          for sql_file in 'sqls/*.sql' 
+          for sql_file in in `find sqls/ -name '*.sql'`
           do
             echo "sql_file=$sql_file"
 
