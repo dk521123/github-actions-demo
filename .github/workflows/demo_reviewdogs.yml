@@ -9,14 +9,6 @@ jobs:
     steps:
       - name: Run checkout
         uses: actions/checkout@v4
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-            python-version: '3.10'
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install sqlfluff
       - uses: yu-iskw/action-sqlfluff@v3
         id: lint-sql
         with:
@@ -24,6 +16,7 @@ jobs:
           reporter: github-pr-review
           sqlfluff_command: "lint"
           paths: '${{ github.workspace }}/sqls'
+          dialect: snowflake
       - name: 'Show outputs (Optional)'
         shell: bash
         run: |
