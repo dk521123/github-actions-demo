@@ -16,25 +16,16 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install ruff
-          pip install pylint
-          pylint --generate-rcfile > ~/.pylintrc
           pip install sqlfluff
-      # reviewdog
-      - uses: reviewdog/action-setup@v1
+      - uses: yu-iskw/action-sqlfluff@v3
+        id: lint-sql
         with:
-          reviewdog_version: latest
-      # For pylint
-      - name: Lint with pylint
+          github_token: ${{ secrets.REVIEWDOG_GITHUB_API_TOKEN }}
+          reporter: github-pr-review
+          sqlfluff_command: "lint"
+          paths: '${{ github.workspace }}/sqls'
+      - name: 'Show outputs (Optional)'
+        shell: bash
         run: |
-          pylint --rcfile=~/.pylintrc *.py | reviewdog -efm="%f:%l:%c: %m" -reporter=github-pr-review
-        env:
-          REVIEWDOG_GITHUB_API_TOKEN: "${{ secrets.REVIEWDOG_GITHUB_API_TOKEN }}"
-      # 
-      - name: format
-        run: |
-          for file in 'sqls/*.sql' 
-          do
-            sqlfluff lint $file --dialect snowflake --format json
-            # sqlfluff lint $file --dialect snowflake --format json |  | reviewdog -efm="%f:%l:%c: %m" -reporter=github-pr-review
-          done
+          echo '${{ steps.lint-sql.outputs.sqlfluff-results }}' | jq -r '.'
+          echo '${{ steps.lint-sql.outputs.sqlfluff-results-rdjson }}' | jq -r '.'
