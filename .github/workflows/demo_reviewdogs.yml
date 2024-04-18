@@ -17,6 +17,7 @@ jobs:
           sqlfluff_command: "lint"
           paths: 'sqls/'
           dialect: snowflake
+          fail_on_error: true
       - name: 'Show outputs (Optional)'
         shell: bash
         run: |
