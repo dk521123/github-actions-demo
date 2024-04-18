@@ -5,7 +5,7 @@
   },
   severity: "WARNING",
   diagnostics: (. // {}) | map(. as $file | $file.violations[] as $violation | {
-    message: "$violation.name - $violation.description",
+    message: $violation.description,
     location: {
       path: $file.filepath,
       range: {
