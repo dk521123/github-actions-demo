@@ -26,9 +26,11 @@ jobs:
       # Step2: Lint
       - name: lint with SQLFluff
         run: |
-          for file in 'sqls/*.sql' 
+          for sql_file in 'sqls/*.sql' 
           do
-            sqlfluff lint $file --dialect snowflake --format json | \
+            echo "sql_file=$sql_file"
+
+            sqlfluff lint $sql_file --dialect snowflake --format json | \
               jq -f .github/template.jq | \
               reviewdog -f=rdjson -reporter=github-pr-review
           done
