@@ -30,5 +30,6 @@ jobs:
           do
             echo "sql_file=$sql_file"
             sqlfluff lint $sql_file --dialect snowflake --format json | jq -f .github/template.jq | reviewdog -f=rdjson -reporter=github-pr-review
+            sqlfluff lint $sql_file --dialect snowflake --format json | jq
             sqlfluff lint $sql_file --dialect snowflake --format json | jq -f .github/template.jq
           done
