@@ -20,36 +20,17 @@ jobs:
             python-version: '3.10'
       - name: install SQLFluff
         run: 'pip install sqlfluff'
-      # Get base branch
-      - name: Fetch Base Branch Latest Commit
+      - name: download
         uses: actions/checkout@v4
+      - uses: yu-iskw/action-sqlfluff@v3
+        id: lint-sql
         with:
-          ref: ${{ github.event.pull_request.base.ref }}
-          fetch-depth: 1
-      - name: Switch to pull request branch
-        uses: actions/checkout@v4
-      # Get  branch
-      - name: Switch to pull request branch
-        uses: actions/checkout@v4
-      - name: Run actions using diff_files
+          github_token: ${{ secrets.REVIEWDOG_GITHUB_API_TOKEN }}
+          reporter: github-pr-review
+          sqlfluff_command: "lint"
+          paths: '${{ github.workspace }}/sqls'
+      - name: 'Show outputs (Optional)'
+        shell: bash
         run: |
-          diff_files=$(git diff --name-only origin/${{ github.event.pull_request.base.ref }}..${{ github.sha }}  -- "sqls/*.sql" \
-            | tr "\n" " ")
-          echo "- diff_files: ${diff_files}"
-
-          for file in ${diff_files}
-          do
-            echo "- target_file: ${file}"
-            sqlfluff lint $file --dialect snowflake --format github-annotation-native
-          done
-      - name: Check PR title
-        if: ${{ !cancelled() }}
-        run: |
-          title="${{ github.event.pull_request.title }}" # 「a"; ls $GITHUB_WORKSPACE"」
-          if [[ $title =~ ^octocat ]]; then
-            echo "PR title starts with 'octocat'"
-            exit 0
-          else
-            echo "PR title did not start with 'octocat'"
-            exit 1
-          fi
+          echo '${{ steps.lint-sql.outputs.sqlfluff-results }}' | jq -r '.'
+          echo '${{ steps.lint-sql.outputs.sqlfluff-results-rdjson }}' | jq -r '.'
