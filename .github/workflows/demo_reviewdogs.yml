@@ -18,7 +18,8 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install sqlfluff
+          # pip install sqlfluff
+          pip install sqlfluff==3.0.4
       # Step1: Install reviewdog
       - uses: reviewdog/action-setup@v1
         with:
@@ -30,6 +31,4 @@ jobs:
           do
             echo "sql_file=$sql_file"
             sqlfluff lint $sql_file --dialect snowflake --format json | jq -f .github/template.jq | reviewdog -f=rdjson -reporter=github-pr-review
-            sqlfluff lint $sql_file --dialect snowflake --format json | jq
-            sqlfluff lint $sql_file --dialect snowflake --format json | jq -f .github/template.jq
           done
