@@ -25,10 +25,12 @@ jobs:
         with:
           reviewdog_version: latest
       # Step2: Lint
-      - name: lint with SQLFluff
+      - id: lint-with-sqlfluff
+        name: lint with SQLFluff
         env:
           RESULT_FILE_PATH: ./result_from_sqlfluff.json
           RDJSON_FILE_PATH: ./result_with_rdjson.json
+        continue-on-error: true
         run: |
           for sql_file in `find sqls/ -name '*.sql'`
           do
@@ -37,8 +39,15 @@ jobs:
             # Run linter
             sqlfluff lint $sql_file --dialect snowflake --format json --write-output ${{ env.RESULT_FILE_PATH }}
             python convert.py ${{ env.RESULT_FILE_PATH }} ${{ env.RDJSON_FILE_PATH }}
-            cat ${{ env.RDJSON_FILE_PATH }} | reviewdog -name="sqlfluff" -fail-on-error -f=rdjson -reporter=github-pr-review
-            
+            cat ${{ env.RDJSON_FILE_PATH }} | reviewdog -name="sqlfluff" -tee -fail-on-error -f=rdjson -reporter=github-pr-review
+
             rm ${{ env.RESULT_FILE_PATH }}
             rm ${{ env.RDJSON_FILE_PATH }}
           done
+      - id: for-error-handling
+        name: For Error handling
+        if: ${{ steps.lint-with-sqlfluff.outcome == 'failure' }}
+        run: |
+          echo "Error handling"
+          exit 1
+        
