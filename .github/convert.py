@@ -7,7 +7,7 @@ def get_severity(is_warning):
 
 def main(input_file, output_file):
   # Step1: Read JSON
-  with open(input_file, "r") as in_file:
+  with open(input_file, "r", newline="\n") as in_file:
     input_json_dict = json.load(in_file)
 
   # Step2: Convert
