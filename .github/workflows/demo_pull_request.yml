@@ -1,36 +1,44 @@
-name: DemoForPullRequest
+name: DemoForReviewdogs
 
 on:
-  pull_request_target:
-    types:
-      - opened
-      - reopened
-      - synchronize
-    paths:
-      - '**.sql'
+  - pull_request
 env:
-  base_branch: develop
+  REVIEWDOG_GITHUB_API_TOKEN: "${{ secrets.REVIEWDOG_GITHUB_API_TOKEN }}"
 jobs:
-  lint-job:
+  demo-job:
+    name: lint
     runs-on: ubuntu-latest
     steps:
+      - name: Run checkout
+        uses: actions/checkout@v4
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
             python-version: '3.10'
-      - name: install SQLFluff
-        run: 'pip install sqlfluff'
-      - name: download
-        uses: actions/checkout@v4
-      - uses: yu-iskw/action-sqlfluff@v3
-        id: lint-sql
-        with:
-          github_token: ${{ secrets.REVIEWDOG_GITHUB_API_TOKEN }}
-          reporter: github-pr-review
-          sqlfluff_command: "lint"
-          paths: '${{ github.workspace }}/sqls'
-      - name: 'Show outputs (Optional)'
-        shell: bash
+      - name: Install dependencies
         run: |
-          echo '${{ steps.lint-sql.outputs.sqlfluff-results }}' | jq -r '.'
-          echo '${{ steps.lint-sql.outputs.sqlfluff-results-rdjson }}' | jq -r '.'
+          python -m pip install --upgrade pip
+          # pip install sqlfluff
+          pip install sqlfluff==3.0.4
+      # Step1: Install reviewdog
+      - uses: reviewdog/action-setup@v1
+        with:
+          reviewdog_version: latest
+      # Step2: Lint
+      - name: lint with SQLFluff
+        env:
+          RESULT_FILE_PATH: ./result_from_sqlfluff.json
+          RDJSON_FILE_PATH: ./result_with_rdjson.json
+        run: |
+          for sql_file in `find sqls/ -name '*.sql'`
+          do
+            echo "sql_file=$sql_file"
+
+            # Run linter
+            sqlfluff lint $sql_file --dialect snowflake --format json --write-output ${{ env.RESULT_FILE_PATH }}
+            python convert.py ${{ env.RESULT_FILE_PATH }} ${{ env.RDJSON_FILE_PATH }}
+            cat ${{ env.RDJSON_FILE_PATH }} | reviewdog -name="hello_world" -f=rdjson -reporter=github-pr-review
+            
+            rm ${{ env.RESULT_FILE_PATH }}
+            rm ${{ env.RDJSON_FILE_PATH }}
+          done
