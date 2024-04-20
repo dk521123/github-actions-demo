@@ -40,6 +40,9 @@ jobs:
             # Run linter
             sqlfluff lint $sql_file --dialect snowflake --format json --write-output ${{ env.RESULT_FILE_PATH }}
             python .github/convert.py ${{ env.RESULT_FILE_PATH }} ${{ env.RDJSON_FILE_PATH }}
+            echo "+++++++++++"
+            cat ${{ env.RDJSON_FILE_PATH }}
+            echo "+++++++++++"
             cat ${{ env.RDJSON_FILE_PATH }} | reviewdog -name="sqlfluff" -tee -fail-on-error -f=rdjson -reporter=github-pr-review
             if [ $? -ne 0 ] ; then
               is_error=true
