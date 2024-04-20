@@ -45,8 +45,8 @@ jobs:
               is_error=true
             fi
 
-            rm ${{ env.RESULT_FILE_PATH }}
-            rm ${{ env.RDJSON_FILE_PATH }}
+            rm ${{ env.RESULT_FILE_PATH }} 2> /dev/null
+            rm ${{ env.RDJSON_FILE_PATH }} 2> /dev/null
           done
           
           if [ "$is_error" == "true" ] ; then
