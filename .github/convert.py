@@ -20,6 +20,22 @@ def main(input_file, output_file):
       if not is_warning:
         has_error = True
       severity = get_severity(is_warning)
+      suggestions = []
+      for fix in violation.get("fixes"):
+        suggestion = {
+          "range": {
+            "start": {
+              "line": fix.get("start_line_no"),
+              "column": fix.get("start_line_pos")
+            },
+            "end": {
+              "line": fix.get("end_line_no"),
+              "column": fix.get("end_line_pos")
+            }
+          },
+          "text": f"{fix.get('type')} / {fix.get('edit')}"
+        } 
+        suggestions.append(suggestion)
 
       diagnostic = {
         "message": f"[{violation.get('name')}] - {violation.get('description')}",
@@ -36,6 +52,7 @@ def main(input_file, output_file):
             },
           }
         },
+        "suggestions": suggestions,
         "severity": severity,
         "code": {
           "value": violation.get("code"),
