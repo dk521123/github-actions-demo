@@ -35,7 +35,6 @@ def main(input_file, output_file):
             },
           }
         },
-        "suggestions": suggestions,
         "severity": severity,
         "code": {
           "value": violation.get("code"),
