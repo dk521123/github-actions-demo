@@ -11,7 +11,7 @@ def main(input_file, output_file):
     input_json_dict = json.load(in_file)
 
   # Step2: Convert
-  diagnostics = {}
+  diagnostics = []
   has_error = False
   for input in input_json_dict:
     path = input.get("filepath")
