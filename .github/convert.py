@@ -73,7 +73,7 @@ def main(input_file, output_file):
   }
 
   # Step3: Write JSON
-  with open(output_file, "w") as out_file:
+  with open(output_file, "w", newline='\n') as out_file:
     json.dump(output_json_dict, out_file)
 
 if __name__ == "__main__":
