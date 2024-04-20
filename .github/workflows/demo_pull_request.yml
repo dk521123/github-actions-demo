@@ -1,4 +1,4 @@
-name: DemoForReviewdogs
+name: DemoForReviewdogsByPullRequest
 
 on:
   - pull_request
