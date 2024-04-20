@@ -30,8 +30,9 @@ jobs:
         env:
           RESULT_FILE_PATH: ./result_from_sqlfluff.json
           RDJSON_FILE_PATH: ./result_with_rdjson.json
-        continue-on-error: true
+        shell: /usr/bin/bash {0}
         run: |
+          is_error=false
           for sql_file in `find sqls/ -name '*.sql'`
           do
             echo "sql_file=$sql_file"
@@ -40,14 +41,17 @@ jobs:
             sqlfluff lint $sql_file --dialect snowflake --format json --write-output ${{ env.RESULT_FILE_PATH }}
             python convert.py ${{ env.RESULT_FILE_PATH }} ${{ env.RDJSON_FILE_PATH }}
             cat ${{ env.RDJSON_FILE_PATH }} | reviewdog -name="sqlfluff" -tee -fail-on-error -f=rdjson -reporter=github-pr-review
+            if [ $? -ne 0 ] ; then
+              is_error=true
+            fi
 
             rm ${{ env.RESULT_FILE_PATH }}
             rm ${{ env.RDJSON_FILE_PATH }}
           done
-      - id: for-error-handling
-        name: For Error handling
-        if: ${{ steps.lint-with-sqlfluff.outcome == 'failure' }}
-        run: |
-          echo "Error handling"
-          exit 1
-        
+          
+          if [ "$is_error" == "true" ] ; then
+            echo "Error"
+            exit 1
+          else
+            echo "Success!"
+          fi
