@@ -34,7 +34,7 @@ def main(input_file, output_file):
               "column": fix.get("end_line_pos")
             }
           },
-          "text": f"{fix.get('type')} / {fix.get('edit')}"
+          "text": fix.get("edit")
         }
         suggestions.append(suggestion)
 
