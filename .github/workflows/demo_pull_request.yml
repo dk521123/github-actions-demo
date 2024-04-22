@@ -24,6 +24,9 @@ jobs:
       - uses: reviewdog/action-setup@v1
         with:
           reviewdog_version: latest
+      - id: show-reviewdog-version
+        name: Show reviewdog version
+        run: reviewdog -version
       # Step2: Lint
       - id: lint-with-sqlfluff
         name: lint with SQLFluff
