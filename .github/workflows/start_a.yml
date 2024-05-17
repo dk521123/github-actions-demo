@@ -6,4 +6,4 @@ jobs:
   call_demo_workflow:
     uses: ./.github/workflows/test_a.yml
     with:
-      runs_on: ubuntu-latest
+      runs_on: "['ubuntu-latest']"
