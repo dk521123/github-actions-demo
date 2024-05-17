@@ -4,19 +4,30 @@ on:
   push:
 
 jobs:
-  test:
-    runs-on: >-
-      ${{
-        github.ref_name == 'prod'
-          && fromJSON('[ "ubuntu-latest" ]')
-          || (github.ref_name == 'stage' && fromJSON('["ubuntu-24.04" ]')
-          || fromJSON('["ubuntu-20.04" ]'))
-      }}
+  init:
+    runs-on: '[ "ubuntu-latest" ]'
     steps:
-      - name: test
-        run: echo "Hi!!"
+      - name: set for dev
+        if: github.ref_name == 'develop'
+        run: |
+          echo "RUNS_ON=\"['ubuntu-20.04']\"" >> "$GITHUB_ENV"
+    
+      - name: set for stage
+        if: github.ref_name == 'stage'
+        run: |
+          echo "RUNS_ON=\"['ubuntu-24.04']\"" >> "$GITHUB_ENV"
+      - name: set for prod
+        if: github.ref_name == 'prod'
+        run: |
+          echo "RUNS_ON=\"['ubuntu-latest']\"" >> "$GITHUB_ENV"
+      - name: set value
+        id: set-value
+        run: |
+          echo "runs_on=${{ env.RUNS_ON }}" >> "$GITHUB_OUTPUT"
+    outputs:
+      runs_on: ${{ steps.set-value.outputs.runs_on }}
   call_demo_workflow:
-    needs: test
+    needs: init
     uses: ./.github/workflows/test_a.yml
     with:
-      runs_on: "['ubuntu-24.04']"
+      runs_on: ${{ needs.init.outputs.runs_on }}
