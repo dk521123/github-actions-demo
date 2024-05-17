@@ -5,18 +5,18 @@ on:
 
 jobs:
   init:
-    runs-on: '[ "ubuntu-latest" ]'
+    runs-on: "ubuntu-latest"
     steps:
       - name: set for dev
-        if: github.ref_name == 'develop'
+        if: github.ref == 'develop'
         run: |
           echo "GITHUB_RUNS_ON=ubuntu-20.04" >> "$GITHUB_ENV"
       - name: set for stage
-        if: github.ref_name == 'stage'
+        if: github.ref == 'stage'
         run: |
           echo "GITHUB_RUNS_ON=ubuntu-24.04" >> "$GITHUB_ENV"
       - name: set for prod
-        if: github.ref_name == 'prod'
+        if: github.ref == 'prod'
         run: |
           echo "GITHUB_RUNS_ON=ubuntu-latest" >> "$GITHUB_ENV"
       - name: set value
