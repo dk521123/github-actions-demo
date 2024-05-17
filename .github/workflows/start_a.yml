@@ -1,7 +1,8 @@
 name: StartA
 
 on:
-  workflow_dispatch:
+  push:
+
 jobs:
   test:
     runs-on: >-
@@ -13,8 +14,9 @@ jobs:
       }}
     steps:
       - name: test
-        run: echo "Hi!!"      
+        run: echo "Hi!!"
   call_demo_workflow:
+    needs: test
     uses: ./.github/workflows/test_a.yml
     with:
       runs_on: "['ubuntu-24.04']"
