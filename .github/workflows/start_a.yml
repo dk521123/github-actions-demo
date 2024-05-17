@@ -22,6 +22,7 @@ jobs:
       - name: set value
         id: set-value
         run: |
+          echo "ref = ${{ github.ref }}"
           echo "github_runs_on=${{ env.GITHUB_RUNS_ON }}" >> "$GITHUB_OUTPUT"
     outputs:
       github_runs_on: ${{ steps.set-value.outputs.github_runs_on }}
