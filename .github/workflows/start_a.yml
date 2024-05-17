@@ -22,7 +22,7 @@ jobs:
       - name: set value
         id: set-value
         run: |
-          echo "ref = ${{ github.ref }}"
+          echo "ref_name = ${{ github.ref_name }}"
           echo "github_runs_on=${{ env.GITHUB_RUNS_ON }}" >> $GITHUB_OUTPUT
     outputs:
       github_runs_on: ${{ steps.set-value.outputs.github_runs_on }}
@@ -30,4 +30,4 @@ jobs:
     needs: init
     uses: ./.github/workflows/test_a.yml
     with:
-      runs_on: ${{ needs.init.outputs.github_runs_on }}
+      runs_on: ubuntu-24.04
