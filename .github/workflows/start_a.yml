@@ -10,15 +10,15 @@ jobs:
       - name: set for dev
         if: github.ref_name == 'develop'
         run: |
-          echo "GITHUB_RUNS_ON=ubuntu-20.04" >> $GITHUB_ENV
+          echo "GITHUB_RUNS_ON='[ \"ubuntu-20.04\" ]'" >> $GITHUB_ENV
       - name: set for stage
         if: github.ref_name == 'stage'
         run: |
-          echo "GITHUB_RUNS_ON=ubuntu-24.04" >> $GITHUB_ENV
+          echo "GITHUB_RUNS_ON='[ \"ubuntu-24.04\" ]'" >> $GITHUB_ENV
       - name: set for prod
         if: github.ref_name == 'prod'
         run: |
-          echo "GITHUB_RUNS_ON=ubuntu-latest" >> $GITHUB_ENV
+          echo "GITHUB_RUNS_ON='[ \"ubuntu-latest\" ]'" >> $GITHUB_ENV
       - name: set value
         id: set-value
         run: |
@@ -30,4 +30,4 @@ jobs:
     needs: init
     uses: ./.github/workflows/test_a.yml
     with:
-      runs_on: ubuntu-24.04
+      runs_on: ${{ needs.init.outputs.github_runs_on }}
