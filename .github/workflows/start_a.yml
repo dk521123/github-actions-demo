@@ -4,7 +4,13 @@ on:
   workflow_dispatch:
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: >-
+      ${{
+        github.ref_name == 'prod'
+          && fromJSON('[ "ubuntu-latest" ]')
+          || (github.ref_name == 'stage' && fromJSON('["ubuntu-24.04" ]')
+          || fromJSON('["ubuntu-20.04" ]'))
+      }}
     steps:
       - name: test
         run: echo "Hi!!"      
