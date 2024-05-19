@@ -10,17 +10,17 @@ jobs:
       - name: set for dev
         if: github.ref_name == 'develop'
         run: |
-          value="'[ \\\"ubuntu-24.04\\\" ]'"
+          value="ubuntu-24.04"
           echo "GITHUB_RUNS_ON=${value}" >> $GITHUB_ENV
       - name: set for stage
         if: github.ref_name == 'stage'
         run: |
-          value='[ "ubuntu-22.04" ]'
+          value="ubuntu-22.04"
           echo "GITHUB_RUNS_ON=${value}" >> $GITHUB_ENV
       - name: set for prod
         if: github.ref_name == 'prod'
         run: |
-          value='[ "ubuntu-latest" ]'
+          value="ubuntu-latest"
           echo "GITHUB_RUNS_ON=${value}" >> $GITHUB_ENV
       - name: set value
         id: set-value
