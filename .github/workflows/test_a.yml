@@ -10,7 +10,7 @@ on:
 
 jobs:
   greeting:
-    runs-on: ${{ fromJSON(inputs.runs_on) }}
+    runs-on: ${{ inputs.runs_on }}
     steps:
       - id: message
         run: |
