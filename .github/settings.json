@@ -1,0 +1,14 @@
+{
+  "dev": {
+    "aws_account_id": 111111111111111,
+    "s3_bucket_name": "your-s3-for-dev"
+  },
+  "stage": {
+    "aws_account_id": 222222222222222,
+    "s3_bucket_name": "your-s3-for-stage"
+  },
+  "prod": {
+    "aws_account_id": 999999999999999,
+    "s3_bucket_name": "your-s3-for-prod"
+  }
+}
