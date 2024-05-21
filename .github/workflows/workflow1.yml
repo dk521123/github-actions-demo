@@ -6,6 +6,8 @@ jobs:
   demo_job:
     runs-on: ubuntu-latest
     steps:
+      # まずは、Githubリポジトリに管理されているファイルをダウンロード
+      - uses: actions/checkout@v4
       - run: |
           version_value=$(cat .github/VERSION)
           echo "version_value: $version_value"
