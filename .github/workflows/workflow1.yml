@@ -26,3 +26,6 @@ jobs:
       - run: |
           echo "ENV: $ENV"
           echo "DEMO_INPUT_VALUE: $DEMO_INPUT_VALUE"
+          jq --version
+          yq --version
+          xq --version
