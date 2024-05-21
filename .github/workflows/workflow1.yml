@@ -2,13 +2,30 @@ name: DemoWorkflow
 
 on:
   workflow_dispatch:
+    inputs:
+      enviroment:
+        required: true
+        type: choice
+        default: dev
+        options:
+        - dev
+        - stage
+        - prod
 jobs:
   demo_job:
     runs-on: ubuntu-latest
     steps:
       # まずは、Githubリポジトリに管理されているファイルをダウンロード
       - uses: actions/checkout@v4
-      - run: |
-          version_value=$(cat .github/VERSION)
-          echo "version_value: $version_value"
-          dasel --version
+      - name: settings
+        env:
+          ENVIRONMENT: ${{ inputs.enviroment }}
+        run: |
+          env=${{ env.ENVIRONMENT }}
+          # [1] aws_account_id
+          aws_account_id=$(cat .github/settings.json | jq '.${env}.aws_account_id')
+          echo "aws_account_id: $aws_account_id"
+          # [2] s3_bucket_name
+          s3_bucket_name=$(cat .github/settings.json | jq '.${env}.s3_bucket_name')
+          echo "s3_bucket_name: $s3_bucket_name"
+
