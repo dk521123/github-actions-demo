@@ -23,9 +23,9 @@ jobs:
         run: |
           env=${{ env.ENVIRONMENT }}
           # [1] aws_account_id
-          aws_account_id=$(cat .github/settings.json | jq '.${env}.aws_account_id')
+          aws_account_id=$(cat .github/settings.json | jq ".${env}.aws_account_id")
           echo "aws_account_id: $aws_account_id"
           # [2] s3_bucket_name
-          s3_bucket_name=$(cat .github/settings.json | jq '.${env}.s3_bucket_name')
+          s3_bucket_name=$(cat .github/settings.json | jq ".${env}.s3_bucket_name")
           echo "s3_bucket_name: $s3_bucket_name"
 
