@@ -10,22 +10,11 @@ on:
         - ubuntu-latest
         - ubuntu-24.04
         - ubuntu-20.04
-      enviroment:
-        required: true
-        type: choice
-        default: dev
-        options:
-        - dev
-        - stage
-        - prod
 jobs:
   demo_job:
     runs-on: ${{ fromJSON(inputs.runs_on) }}
     steps:
       - uses: actions/checkout@v4
       - name: settings
-        env:
-          ENVIRONMENT: ${{ inputs.enviroment }}
         run: |
           echo "${{ fromJSON(inputs.runs_on) }}"
-          echo "${{ ENVIRONMENT }}"
