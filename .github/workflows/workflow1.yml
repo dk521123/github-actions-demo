@@ -12,7 +12,7 @@ on:
         - ubuntu-20.04
 jobs:
   demo_job:
-    runs-on: ${{ fromJSON(inputs.runs_on) }}
+    runs-on: ${{ inputs.runs_on }}
     steps:
       - uses: actions/checkout@v4
       - name: settings
