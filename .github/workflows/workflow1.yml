@@ -14,9 +14,9 @@ jobs:
   demo_job:
     runs-on: >-
       ${{
-        (github.ref_name == 'develpe' && inputs.env == 'dev')
+        (github.ref_name == 'develop' && inputs.env == 'dev')
           && fromJSON('[ "ubuntu-20.04" ]')
-          || ((github.ref_name != 'develpe' && inputs.env == 'dev') && fromJSON('["ubuntu-24.04" ]')
+          || ((github.ref_name != 'develop' && inputs.env == 'dev') && fromJSON('["ubuntu-24.04" ]')
           || fromJSON('["ubuntu-latest" ]'))
       }}
     steps:
