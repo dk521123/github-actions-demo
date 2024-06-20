@@ -3,6 +3,13 @@ name: DemoWorkflow
 on:
   workflow_dispatch:
     inputs:
+      runs_on:
+        type: choice
+        default: ubuntu-latest
+        options:
+        - ubuntu-latest
+        - ubuntu-24.04
+        - ubuntu-20.04
       enviroment:
         required: true
         type: choice
@@ -13,19 +20,12 @@ on:
         - prod
 jobs:
   demo_job:
-    runs-on: ubuntu-latest
+    runs-on: ${{ fromJSON(inputs.runs_on) }}
     steps:
-      # まずは、Githubリポジトリに管理されているファイルをダウンロード
       - uses: actions/checkout@v4
       - name: settings
         env:
           ENVIRONMENT: ${{ inputs.enviroment }}
         run: |
-          env=${{ env.ENVIRONMENT }}
-          # [1] aws_account_id
-          aws_account_id=$(cat .github/settings.json | jq ".${env}.aws_account_id")
-          echo "aws_account_id: $aws_account_id"
-          # [2] s3_bucket_name
-          s3_bucket_name=$(cat .github/settings.json | jq ".${env}.s3_bucket_name")
-          echo "s3_bucket_name: $s3_bucket_name"
-
+          echo "${{ fromJSON(inputs.runs_on) }}"
+          echo "${{ ENVIRONMENT }}"
