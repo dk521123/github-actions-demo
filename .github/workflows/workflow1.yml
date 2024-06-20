@@ -18,4 +18,3 @@ jobs:
       - name: settings
         run: |
           echo "Hello, world"
-          echo "${{ fromJSON(inputs.runs_on) }}"
