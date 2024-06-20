@@ -3,16 +3,22 @@ name: DemoWorkflow
 on:
   workflow_dispatch:
     inputs:
-      runs_on:
+      env:
         type: choice
-        default: ubuntu-latest
+        default: dev
         options:
-        - ubuntu-latest
-        - ubuntu-24.04
-        - ubuntu-20.04
+        - dev
+        - stage
+        - prod
 jobs:
   demo_job:
-    runs-on: ${{ inputs.runs_on }}
+    runs-on: >-
+      ${{
+        (github.ref_name == 'develpe' && inputs.env == 'dev')
+          && fromJSON('[ "ubuntu-20.04" ]')
+          || ((github.ref_name != 'develpe' && inputs.env == 'dev') && fromJSON('["ubuntu-24.04" ]')
+          || fromJSON('["ubuntu-latest" ]'))
+      }}
     steps:
       - uses: actions/checkout@v4
       - name: settings
