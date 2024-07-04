@@ -2,17 +2,9 @@ name: TestA
 
 on:
   workflow_call:
-    inputs:
-      runs_on:
-        description: runs on
-        default: ubuntu-latest
-        type: string
-
 jobs:
   greeting:
-    runs-on: ${{ inputs.runs_on }}
+    runs-on: ubuntu-latest
     steps:
-      - id: message
-        run: |
-          echo "Hello world..."
-    
+      - name: Checkout
+        uses: actions/checkout@v3
