@@ -2,10 +2,28 @@ name: TestA
 
 on:
   workflow_dispatch:
+    inputs:
+      runs_on:
+        type: choice
+        default: ""
+        options:
+        - ubuntu-24.04
+        - ubuntu-20.04
+  push:
+    branches:
+      - develop
 jobs:
   sample:
-    runs-on: ubuntu-latest
+    runs-on: >-
+      ${{
+        inputs.runs_on != ""
+          && fromJSON(inputs.runs_on)
+          || (github.ref_name == 'develop' && fromJSON('["ubuntu-latest" ]')
+          || fromJSON('["ubuntu-24.04" ]'))
+      }}
     steps:
-      # https://github.com/actions/checkout/commits/v3.1.0  
-      # - uses: actions/checkout@v3.1.0
+      - name: Demo sample
+        run: echo "Hello, world!!"
+
+    
       - uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
