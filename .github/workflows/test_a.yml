@@ -17,9 +17,9 @@ jobs:
     runs-on: >-
       ${{
         inputs.runs_on != ''
-          && fromJSON(inputs.runs_on)
-          || (github.ref_name == 'develop' && fromJSON('["ubuntu-latest" ]')
-          || fromJSON('["ubuntu-24.04" ]'))
+          && fromJSON('["inputs.runs_on"]')
+          || (github.ref_name == 'develop' && fromJSON('["ubuntu-latest"]')
+          || fromJSON('["ubuntu-24.04"]'))
       }}
     steps:
       - name: Demo sample
