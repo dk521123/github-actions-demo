@@ -13,11 +13,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Validate JSON file
         run: |
-          diff_files=$(git diff --name-only HEAD ${base_branch} -- "**.json" \
-            | tr "\n" " ")
-          echo "- diff_files: ${diff_files}"
-
-          for file in ${diff_files}
+          for file in '**.json'
           do
             echo "- target_file: ${file}"
             jq $file
