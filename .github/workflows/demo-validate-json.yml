@@ -1,0 +1,19 @@
+name: ValidateJson
+
+on:
+  push:
+    paths:
+      # JSON ファイル (.json) をプッシュするたびに実行
+      - '**.json'
+
+jobs:
+  validate-yaml:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Validate JSON file
+        run: |
+          for file in '*.json' 
+          do
+            jq $file
+          done
