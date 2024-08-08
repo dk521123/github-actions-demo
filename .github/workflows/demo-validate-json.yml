@@ -16,5 +16,5 @@ jobs:
           for file in '**.json'
           do
             echo "- target_file: ${file}"
-            jq $file
+            jq . $file
           done
