@@ -17,4 +17,3 @@ jobs:
         uses: karancode/yamllint-github-action@v2.1.1
         with:
           yamllint_file_or_dir: .
-          yamllint_config_filepath: .yamllint
