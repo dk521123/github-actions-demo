@@ -6,4 +6,4 @@ name = "Tom Preston-Werner"
 dob = 1979-05-27T07:32:00-08:00
 
 [[table_array]]
-key1 = ["value1", "value2", "value3"]
+key1 = ["value1", "value2"]
