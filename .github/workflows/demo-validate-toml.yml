@@ -3,7 +3,8 @@ name: ValidateToml
 on:
   push:
     branches:
-      - '!develop'
+      - 'feature/**'
+      - 'releases/**'
     paths:
       # TOML ファイル (.toml) をプッシュするたびに実行
       - '**.toml'
