@@ -17,11 +17,10 @@ jobs:
       - name: "Checkout"
         uses: actions/checkout@v4
         with:
-          # ★重要★
           ref: ${{ github.event.pull_request.head.sha }}
       # リモートoriginにあるdevelopブランチを、それを追跡しているローカルにあるorigin/developにフェッチする
       - name: Fetch base branch
-        run: git fetch origin ${base_branch}:${base_branch}
+        run: git fetch --update-head-ok origin ${base_branch}:${base_branch}
       - name: Validate TOML file
         run: |
           # Run actions using diff_files
