@@ -29,7 +29,7 @@ jobs:
           echo "# diff_files: ${diff_files}"
 
           # 差分でループ
-          for file in ${files[@]}; do
+          for file in ${diff_files[@]}; do
             echo ${file}
             python .github/validate_toml.py $file
           done 
