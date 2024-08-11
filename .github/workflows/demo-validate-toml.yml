@@ -5,21 +5,29 @@ on:
     paths:
       # TOML ファイル (.toml) をプッシュするたびに実行
       - '**.toml'
+env:
+  base_branch: develop
 jobs:
   validate-toml:
     runs-on: ubuntu-latest
-
     steps:
       - name: "Checkout"
         uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12' 
+          python-version: '3.12'
+      # リモートoriginにあるdevelopブランチを、それを追跡しているローカルにあるorigin/developにフェッチする
+      - name: Fetch base branch
+        run: git fetch origin ${base_branch}:${base_branch}
       - name: Validate TOML file
         run: |
-          for file in '**.toml'
-          do
-            echo "- target_file: ${file}"
-            # jq . $file
+          # Run actions using diff_files
+          diff_files=$(git diff --name-only HEAD ${base_branch} -- "**.toml" \
+            | tr "\n" " ")
+          echo "# diff_files: ${diff_files}"
+
+          # 差分でループ
+          for file in ${files[@]}; do
+            echo ${file}
             python .github/validate_toml.py $file
-          done
+          done 
