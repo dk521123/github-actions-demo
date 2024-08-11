@@ -2,8 +2,17 @@ name: ValidateToml
 
 on:
   push:
+    branches:
+      - '!develop'
     paths:
       # TOML ファイル (.toml) をプッシュするたびに実行
+      - '**.toml'
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+    paths:
       - '**.toml'
 env:
   base_branch: develop
@@ -14,20 +23,18 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - uses: actions/checkout@v4
-        name: checkout "${{ github.base_ref }}"
+      - name: "Checkout"
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 1
-          ref: ${{ github.base_ref }}
-      - uses: actions/checkout@v4
-        name: checkout "${{ github.head_ref }}"
-        with:
-          fetch-depth: 1
-          ref: ${{ github.head_ref}}
+          ref: ${{ github.event.pull_request.head.sha }}
+      # リモートoriginにあるdevelopブランチを、それを追跡しているローカルにあるorigin/developにフェッチする
+      - name: Fetch base branch
+        run: git fetch origin ${base_branch}:${base_branch}
       - name: Validate TOML file
         run: |
           # Run actions using diff_files
-          diff_files=(`git diff origin/${{ github.base_ref }} --name-only -- "**.toml" |tr '\n' ' ' `)
+          diff_files=$(git diff --name-only HEAD ${base_branch} -- "**.toml" \
+            | tr "\n" " ")
           echo "# diff_files: ${diff_files}"
 
           # 差分でループ
