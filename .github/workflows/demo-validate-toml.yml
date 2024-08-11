@@ -27,8 +27,7 @@ jobs:
       - name: Validate TOML file
         run: |
           # Run actions using diff_files
-          diff_files=$(git diff --name-only HEAD ${base_branch} -- "**.toml" \
-            | tr "\n" " ")
+          diff_files=(`git diff origin/${{ github.base_ref }} --name-only -- "**.toml" |tr '\n' ' ' `)
           echo "# diff_files: ${diff_files}"
 
           # 差分でループ
