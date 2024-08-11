@@ -11,11 +11,14 @@ jobs:
   validate-toml:
     runs-on: ubuntu-latest
     steps:
-      - name: "Checkout"
-        uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: "Checkout"
+        uses: actions/checkout@v4
+        with:
+          # ★重要★
+          ref: ${{ github.event.pull_request.head.sha }}
       # リモートoriginにあるdevelopブランチを、それを追跡しているローカルにあるorigin/developにフェッチする
       - name: Fetch base branch
         run: git fetch origin ${base_branch}:${base_branch}
