@@ -8,3 +8,4 @@ dob = 1979-05-27T07:32:00-08:00 # date type
 [[table_array]]
 key1 = "value1"
 key2 = "value2"
+key3 = "value3"
