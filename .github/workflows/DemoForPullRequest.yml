@@ -28,7 +28,7 @@ jobs:
       - name: Run actions using diff_files
         run: |
           # ★２：...: 分岐からの差分（ベースブランチの変更が含まれない ＝ PR の Files changed）
-          diff_files=$(git diff --diff-filter=ACM --name-only origin/${base_branch}...origin/${GITHUB_HEAD_REF} -- "sqls/**.sql" \
+          diff_files=$(git diff --name-only origin/${base_branch}...origin/${GITHUB_HEAD_REF} -- "sqls/**.sql" \
             | tr "\n" " ")
           echo "- diff_files: ${diff_files}"
 
