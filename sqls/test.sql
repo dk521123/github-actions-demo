@@ -2,6 +2,6 @@ SELECT
     a,
     b,
     e,
-    c + d AS result
+    c + d AS r
 FROM
     hello;
