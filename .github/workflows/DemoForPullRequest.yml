@@ -1,0 +1,39 @@
+name: DemoForPullRequest
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+    paths:
+      - '**.sql'
+env:
+  base_branch: develop
+jobs:
+  lint-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+            python-version: '3.10'
+      - name: install SQLFluff
+        run: 'pip install sqlfluff'
+      - name: Switch to pull request branch
+        uses: actions/checkout@v4
+        with:
+          # ★１：分岐を特定するために fetch-depth: 0 で履歴をすべて取得する必要がある
+          fetch-depth: 0
+      - name: Run actions using diff_files
+        run: |
+          # ★２：...: 分岐からの差分（ベースブランチの変更が含まれない ＝ PR の Files changed）
+          diff_files=$(git diff --diff-filter=ACM --name-only origin/${base_branch}...origin/${GITHUB_HEAD_REF} -- "sqls/**.sql" \
+            | tr "\n" " ")
+          echo "- diff_files: ${diff_files}"
+
+          for file in ${diff_files}
+          do
+            echo "- target_file: ${file}"
+            sqlfluff lint $file --dialect snowflake --format github-annotation-native
+          done
