@@ -7,11 +7,11 @@ def get_severity(is_warning):
 
 def main(input_file, output_file):
   # Step1: Read JSON
-  with open(input_file, "r") as in_file:
+  with open(input_file, "r", newline="\n") as in_file:
     input_json_dict = json.load(in_file)
 
   # Step2: Convert
-  diagnostics = {}
+  diagnostics = []
   has_error = False
   for input in input_json_dict:
     path = input.get("filepath")
@@ -20,6 +20,24 @@ def main(input_file, output_file):
       if not is_warning:
         has_error = True
       severity = get_severity(is_warning)
+
+      suggestions = []
+      for fix in violation.get("fixes"):
+        suggestion = {
+          "range": {
+            "start": {
+              "line": fix.get("start_line_no"),
+              "column": fix.get("start_line_pos")
+            },
+            "end": {
+              "line": fix.get("end_line_no"),
+              "column": fix.get("end_line_pos")
+            }
+          },
+          "text": fix.get("edit")
+        }
+        suggestions.append(suggestion)
+
       diagnostic = {
         "message": f"[{violation.get('name')}] - {violation.get('description')}",
         "location": {
@@ -35,13 +53,14 @@ def main(input_file, output_file):
             },
           }
         },
+        "suggestions": suggestions,
         "severity": severity,
         "code": {
           "value": violation.get("code"),
           "url": f"https://docs.sqlfluff.com/en/stable/rules.html#rule-{violation.get('code')}"
         }
       }
-      diagnostics.update(diagnostic)
+      diagnostics.append(diagnostic)
   main_severity = get_severity(not has_error)
 
   output_json_dict = {
@@ -54,7 +73,7 @@ def main(input_file, output_file):
   }
 
   # Step3: Write JSON
-  with open(output_file, "w") as out_file:
+  with open(output_file, "w", newline="\n") as out_file:
     json.dump(output_json_dict, out_file)
 
 if __name__ == "__main__":

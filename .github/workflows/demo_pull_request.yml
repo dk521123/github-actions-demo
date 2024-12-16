@@ -24,6 +24,9 @@ jobs:
       - uses: reviewdog/action-setup@v1
         with:
           reviewdog_version: latest
+      - id: show-reviewdog-version
+        name: Show reviewdog version
+        run: reviewdog -version
       # Step2: Lint
       - id: lint-with-sqlfluff
         name: lint with SQLFluff
@@ -39,10 +42,15 @@ jobs:
 
             # Run linter
             sqlfluff lint $sql_file --dialect snowflake --format json --write-output ${{ env.RESULT_FILE_PATH }}
+            echo "==========="
+            cat ${{ env.RESULT_FILE_PATH }}
+            echo "==========="
+
             python .github/convert.py ${{ env.RESULT_FILE_PATH }} ${{ env.RDJSON_FILE_PATH }}
             echo "+++++++++++"
             cat ${{ env.RDJSON_FILE_PATH }}
             echo "+++++++++++"
+
             cat ${{ env.RDJSON_FILE_PATH }} | reviewdog -name="sqlfluff" -tee -fail-on-error -f=rdjson -reporter=github-pr-review
             if [ $? -ne 0 ] ; then
               is_error=true
